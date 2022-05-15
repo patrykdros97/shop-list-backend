@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include '_message.html' %}
+<div class="container">
+    <div class="col-md-2"></div>
+    <div class="col-md-8"></div>
+        <h2 class="text-center"> Add a product</h2>
+        {% macro render_field(field) %}
+            <dt>{{ field.label }}
+            <dd>{{ field(**kwargs)|safe }}
+            {% if field.errors %}
+                <ul class="error">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </dd>
+        {% endmacro %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ render_field(form.name, class="form-control", placeholder="Add product name")}}
+            <label for="list">Add a shop list</label>
+            <select name="list" id="list" class="form-control">
+                <option value="">Select a shop list</option>
+                {% for list in lists %}
+            <option value="{{list.id}}">{{ list.name }}</option>
+                {% endfor %}
+
+            </select>
+            <button type="submit" class="btn btn-outline-info mt-4"> Add product</button>
+        </form>
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock content %}

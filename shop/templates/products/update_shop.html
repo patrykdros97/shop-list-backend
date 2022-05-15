@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% include "_message.html" %}
+            <h1 class="text-center mt-5">Edit list</h1>
+            <form action="" method="post">
+                <input type="text" name="shop" class="form-control" value="{{update_list.name}}">
+                <input type="submit" value="Edit list" class="btn btn-info mt-2">
+            </form>
+            <a href="{{url_for('admin')}}" class="btn btn-warning" style="margin-top: -65px; margin-left: 140px;"> Cancel</a>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+{% endblock content %}

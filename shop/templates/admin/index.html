@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include '_message.html' %}
+<form action="/checkbox/{{shop_list.name}}" method="post" class="flex-items">
+<div class="container">
+    <h2 class="text-center"> {{shop_list.name}}</h2>
+    <table class="table table-sm">
+        <thead>
+            <th>Name</th>
+            <th>Added</th>
+            <th>In List</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            
+            {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.pub_date}}</td>
+                <td>
+                    <div class="container">
+                        {% if product.marked %}
+                            <input type="checkbox" value="{{product.id}}" name="marked" checked>
+                        {% else %}
+                            <input type="checkbox" value="{{product.id}}" name="marked">
+                        {% endif %}
+                    </div>
+                </td>
+                <td><a href="/update_product/{{product.id}}" class="btn btn-sm btn-outline-info">Edit</a></td>
+                <td><a href="" class="btn btn-sm btn-outline-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <button class="kind_button" type="submit">save already bought products</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+<div class="container mt-5">
+    <div>
+        <div class="input-group">
+            <form action="/add-product" class="flex-items">
+                <button class="kind_button" type="submit">Add new product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

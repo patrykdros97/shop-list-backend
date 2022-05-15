@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include '_message.html' %}
+<form action="/delete-multiple-lists" method="post" class="flex-items">
+<div class="container mt-5">
+    <h2 class="text-center"> Shopping lists</h2>
+    <table id="mytable" class="table table-sm table-condenesed table-striped">
+        <thead>
+            <th>
+                <input type="checkbox" name="checkall">
+            </th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            {% for list in lists %}
+            <tr>
+                <td>
+                    <input type="checkbox" value="{{list.id}}" name="mycheckbox" class="checkthis"></td>
+                <td>
+                    <form action="/{{ list.name }}" class="flex-items">
+                        <button class="kind_button" type="submit">{{ list.name }}</button>
+                    </form>
+                </td>
+                <td><a href="/update/{{list.id}}" class="btn btn-sm btn-outline-info">Edit</a></td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal-{{list.id}}">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal-{{list.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{list.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="text-danger">Are you shure to delete {{list.name}}?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <form action="{{url_for('delete_list', id=list.id)}}" method="POST">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <div style="margin-top: 30px; margin-left: -20;">
+            <button class="kind_button" type="submit">Delete multiple lists</button>
+        </div>
+    </div>
+</div>
+</form>
+<div class="container mt-5">
+    <div>
+        <div class="input-group" style="margin-top: -20px;">
+            <form action="/add-shop-list" class="flex-items">
+                <button class="kind_button" type="submit">Add new shopping list</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
