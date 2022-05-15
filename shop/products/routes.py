@@ -72,8 +72,8 @@ def update_shop_list(id):
 
 @app.route('/update_product/<int:id>', methods=['GET', 'POST'])
 def update_product(id):
-    shop = Shopping.query.get(id)
     product = Post.query.get_or_404(id)
+    shop = Shopping.query.get(product.shopping_id)
     form = Addproducts(request.form)
     if request.method == 'POST':
         product.name = form.name.data
