@@ -4,16 +4,6 @@ from .models import Shopping
 from .forms import Addproducts
 from .models import Post
 
-@app.route('/checkbox/<shop>', methods=['GET', 'POST'])
-def checkbox(shop):
-    if request.method == 'POST':
-        for product_id in request.form.getlist('marked'):
-            product = Post.query.get_or_404(int(product_id))
-            product.marked = True
-            db.session.commit()
-    return redirect(url_for('view_list', shop=shop))
-    
-
 
 @app.route('/')
 def admin():
@@ -27,6 +17,16 @@ def view_list(shop):
     products = Post.query.filter_by(shopping_id=shop_list.id)
     
     return render_template('admin/index.html', products=products, shop_list=shop_list)
+
+
+@app.route('/checkbox/<shop>', methods=['GET', 'POST'])
+def checkbox(shop):
+    if request.method == 'POST':
+        for product_id in request.form.getlist('marked'):
+            product = Post.query.get_or_404(int(product_id))
+            product.marked = True
+            db.session.commit()
+    return redirect(url_for('view_list', shop=shop))
 
 
 @app.route('/add-shop-list', methods=['GET', 'POST'])
@@ -70,7 +70,7 @@ def update_shop_list(id):
     return render_template('products/update_shop.html', title='Update shop name', update_list=update_list)
 
 
-@app.route('/update_product/<int:id>', methods=['GET', 'POST'])
+@app.route('/update-product/<int:id>', methods=['GET', 'POST'])
 def update_product(id):
     product = Post.query.get_or_404(id)
     shop = Shopping.query.get(product.shopping_id)
